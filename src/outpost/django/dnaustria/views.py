@@ -40,8 +40,10 @@ class DataView(JSONResponseMixin, View):
                     "event_has_fees": event.attending_fees,
                     "event_is_online": settings.DNAUSTRIA_EVENT_IS_ONLINE,
                     "organization_name": settings.DNAUSTRIA_ORGANIZATION_NAME,
-                    "event_contact_name": event.contact,
-                    "event_contact_email": event.email,
+                    "event_contact_name": event.contact
+                    or settings.DNAUSTRIA_EVENT_FALLBACK_CONTACT,
+                    "event_contact_email": event.email
+                    or settings.DNAUSTRIA_EVENT_FALLBACK_EMAIL,
                     "event_address_street": settings.DNAUSTRIA_EVENT_ADDRESS_STREET,
                     "event_address_city": settings.DNAUSTRIA_EVENT_ADDRESS_CITY,
                     "event_address_zip": settings.DNAUSTRIA_EVENT_ADDRESS_ZIP,
