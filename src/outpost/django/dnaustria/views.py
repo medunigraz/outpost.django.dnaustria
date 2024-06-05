@@ -8,6 +8,7 @@ from outpost.django.typo3.models import (
     Category,
     Event,
 )
+from url_normalize import url_normalize
 
 from .conf import settings
 
@@ -31,7 +32,7 @@ class DataView(JSONResponseMixin, View):
                     "event_description": wrap(
                         description, settings.DNAUSTRIA_DESCRIPTION_LENGTH
                     )[0],
-                    "event_link": event.link,
+                    "event_link": url_normalize(event.link),
                     "event_target_audience": settings.DNAUSTRIA_EVENT_TARGET_AUDIENCE,
                     "event_topics": settings.DNAUSTRIA_EVENT_TOPICS,
                     "event_start": event.start.isoformat(),
