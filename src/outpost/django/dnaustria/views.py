@@ -25,6 +25,10 @@ class DataView(JSONResponseMixin, View):
         for event in events:
 
             description = BeautifulSoup(event.body).get_text()
+            urls = (
+                url_normalize(event.link),
+                url_normalize(event.url()),
+            )
 
             context_dict.get("events").append(
                 {
@@ -32,7 +36,10 @@ class DataView(JSONResponseMixin, View):
                     "event_description": wrap(
                         description, settings.DNAUSTRIA_DESCRIPTION_LENGTH
                     )[0],
-                    "event_link": url_normalize(event.link),
+                    "event_link": next(
+                        (u for u in urls if u is not None),
+                        settings.DNAUSTRIA_EVENT_FALLBACK_LINK,
+                    ),
                     "event_target_audience": settings.DNAUSTRIA_EVENT_TARGET_AUDIENCE,
                     "event_topics": settings.DNAUSTRIA_EVENT_TOPICS,
                     "event_start": event.start.isoformat(),

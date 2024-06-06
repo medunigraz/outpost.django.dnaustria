@@ -12,6 +12,7 @@ class DNAustriaAppConf(AppConf):
     EVENT_ADDRESS_CITY = "Graz"
     EVENT_ADDRESS_ZIP = "8010"
     EVENT_ADDRESS_STATE = "Steiermark"
+    EVENT_FALLBACK_LINK = "https://www.medunigraz.at"
     EVENT_FALLBACK_CONTACT = "Med Uni Graz, Events"
     EVENT_FALLBACK_EMAIL = "events@medunigraz.at"
     LOCATION = [47.08064, 15.46992]
