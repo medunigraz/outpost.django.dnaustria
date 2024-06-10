@@ -16,7 +16,7 @@ class DNAustriaAppConf(AppConf):
     EVENT_FALLBACK_CONTACT = "Med Uni Graz, Events"
     EVENT_FALLBACK_EMAIL = "events@medunigraz.at"
     LOCATION = [47.08064, 15.46992]
-    DESCRIPTION_LENGTH = 200
+    DESCRIPTION_LENGTH = 2000
 
     class Meta:
         prefix = "dnaustria"
