@@ -1,14 +1,13 @@
+import hashlib
 from textwrap import wrap
 
 from braces.views import JSONResponseMixin
 from bs4 import BeautifulSoup
 from django.utils import timezone
 from django.views.generic import View
-from outpost.django.typo3.models import (
-    Category,
-    Event,
-)
 from url_normalize import url_normalize
+
+from outpost.django.typo3.models import Category, Event
 
 from .conf import settings
 
@@ -25,6 +24,10 @@ class DataView(JSONResponseMixin, View):
         for event in events:
 
             description = BeautifulSoup(event.body).get_text()
+
+            group_id = hashlib.sha256()
+            group_id.update(event.title.encode("utf-8") + description.encode("utf-8"))
+
             urls = (
                 url_normalize(event.link),
                 url_normalize(event.url()),
@@ -57,6 +60,7 @@ class DataView(JSONResponseMixin, View):
                     "event_address_zip": settings.DNAUSTRIA_EVENT_ADDRESS_ZIP,
                     "event_address_state": settings.DNAUSTRIA_EVENT_ADDRESS_STATE,
                     "location": settings.DNAUSTRIA_LOCATION,
+                    "group_id": group_id.hexdigest()[:16],
                 }
             )
 
